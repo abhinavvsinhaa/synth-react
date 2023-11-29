@@ -1,9 +1,144 @@
 #synth-editor {
-  width: 65%;
-  height: 100%;
-  display: grid;
-  position: absolute;
-  top: 0;
-  left: 5%;
-  border-left: 1px solid rgb(35, 35, 35);
+    width: 65%;
+    height: 100%;
+    display: grid;
+    position: absolute;
+    top: 0;
+    left: 5%;
+    border-left: 1px solid rgb(35, 35, 35);
+}
+
+#synth-editor-fallback-container {
+    display: grid;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    background-color: rgb(3, 3, 3);
+}
+
+#synth-editor-fallback-greeting-div {
+    display: grid;
+    top: calc(50% - 150px);
+    justify-self: center;
+    position: absolute;
+    color: white;
+    letter-spacing: 4px;
+    font-size: 42px;
+    font-weight: bolder;
+}
+
+#synth-editor-fallback-actionbtn-container {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    position: absolute;
+    place-self: center;
+    width: 50%;
+    height: 100px;
+}
+
+#synth-editor-fallback-actionbtn {
+    display: grid;
+    place-self: center;
+    background-color: #2e2eb0;
+    border-radius: 6px;
+    color: white;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#synth-editor-fallback-actionbtn:hover {
+    background-color: #1e1e75;
+}
+
+
+.editor-tab-container {
+    position: absolute;
+    display: grid;
+    place-content: start;
+    grid-auto-flow: column;
+    overflow-x: auto;
+    overflow-y: hidden;
+    top: 0;
+    background: #1e1e1e;
+    width: calc(100% - 150px);
+    left: 0;
+    height: 34px;
+}
+
+.editor-tab {
+    font-family: OxygenRegular, monospace, system-ui;
+    font-size: 14px;
+    color: #cccccc;
+    place-content: center;
+    min-width: 100px;
+    max-width: 300px;
+    cursor: pointer;
+    display: grid;
+    position: relative;
+    padding: 8px 10px;
+    border-right: 1px solid #383838;
+}
+
+.editor-tab:hover > .close-tab-container {
+    display: grid;
+}
+
+.close-tab-container:hover {
+    display: grid;
+}
+
+.editor-tab > .close-tab-container {
+    display: none;
+    position: absolute;
+    color: lightgray;
+    right: 4px;
+    top: 4px;
+    font-size: 8px;
+}
+
+.editor-tab-active > .editor-tab-active-indic {
+    display: grid;
+}
+
+.editor-tab-active-indic {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 100px;
+    background-color: #2558bd;
+}
+
+.editor-tab:hover {
+    background: #1f1f1f;
+}
+
+.editor-monaco-container {
+    position: absolute;
+    top: 35px;
+    width: 100%;
+    height: calc(100% - 35px);
+}
+
+.editor-container {
+    position: relative;
+}
+
+.cta-container {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 5px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 34px;
+    width: 150px;
+    background-color: #1e1e1e;
 }
