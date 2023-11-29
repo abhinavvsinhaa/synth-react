@@ -11,4 +11,9 @@ body {
   justify-content: center;
   align-items: center;
   background-color: rgb(44, 44, 44);
+  margin: 0;
+}
+
+.root {
+  width: 100%;
 }
