@@ -1,4 +1,4 @@
-import { FallbackCTABtns } from '../../constants';
+import { ExtensionLanguageMap, FallbackCTABtns } from '../../constants';
 import { OpenedFileDetails } from '../../typings/files';
 import { useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -55,11 +55,12 @@ export const Editor = () => {
 
   const RenderEditor = () => {
       const activeFile = getFileDetailsById(activeFileId);
+      const fallBackLanguage = 'js';
       return (
         <MonacoEditor
           height='100%'
           theme={'vs-dark'}
-          defaultLanguage={activeFile?.fileExtension}
+          defaultLanguage={ExtensionLanguageMap.get(activeFile?.fileExtension || fallBackLanguage)}
           defaultValue={activeFile?.data}
           onMount={handleEditorDidMount}
         />
