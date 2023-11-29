@@ -36,6 +36,20 @@ const Compile = () => {
 }
 
 const RunTestCase = () => {
+  const runCPP = () => {
+    // @ts-ignore
+    window.electronAPI.ipcRenderer.sendMessage('run')
+
+     // @ts-ignore
+     window.electronAPI.ipcRenderer.on('onRan', data => {
+      var decoded = new TextDecoder().decode(data)
+      console.log('run:', data);
+      
+      // const ele = document.getElementById('compile-output-text')
+      // ele!.innerText = decoded 
+    })
+  }
+
   return (
     <div className="ct-tab">
       <div className={'ct-header'}>
@@ -43,7 +57,7 @@ const RunTestCase = () => {
           <p className={'tab-name'}>Run test cases</p>
           <p className={'tab-description'}>Check code output against given test case</p>
         </div>
-        <button className='compile-button'>Execute</button>
+        <button className='compile-button' onClick={runCPP}>Execute</button>
       </div>
     </div>
   );

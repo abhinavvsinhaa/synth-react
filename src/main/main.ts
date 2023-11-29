@@ -44,15 +44,30 @@ const generateFileDataFromPath = (filePath: string, data: string) => {
 };
 
 ipcMain.on('execute', async (event: Electron.IpcMainEvent) => {
-  const child = spawn('pwd')
+  const child = spawn('g++', ['-std=c++14', '-o hello', '~/Desktop/hello.cpp'])
     
   child.stdout.on('data', data => {
-      console.log('data:', data);
-      event.reply('onExecuted', data)
+    console.log('data:', data);
+    event.reply('onExecuted', data)
   })
   
   child.stderr.on('error', error => {
-      console.log('error:', error);
+    console.log('error:', error);
+  })
+})
+
+ipcMain.on('run', async (event: Electron.IpcMainEvent) => {
+  const child = spawn('~/Desktop/hello')
+
+  process.stdout.pipe(child.stdin)
+
+  child.stdout.on('data', data => {
+    console.log('data:', data);
+    event.reply('onRan', data)
+  })
+
+  child.stderr.on('error', error => {
+    console.log('error:', error);
   })
 })
 
