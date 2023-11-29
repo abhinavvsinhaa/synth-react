@@ -3,3 +3,20 @@
   height: 100%;
   background-color: bisque;
 }
+
+.ct {
+
+}
+
+.tab-name {
+  color: #F9FBFD;
+  font-weight: bold;
+}
+
+.tab-description {
+  color: #F9FBFD;
+  font-size: 12px;
+  font-weight: lighter;
+  opacity: 0.8;
+  margin-top: 8px;
+}
