@@ -4,8 +4,7 @@ const Compile = () => {
   const compileCPP = () => {
     // @ts-ignore
     window.electronAPI.ipcRenderer.sendMessage('execute', {
-      command: 'g++',
-      arguments: ["-std=c++14"]
+
     })
 
      // @ts-ignore

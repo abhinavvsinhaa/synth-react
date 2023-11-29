@@ -17,7 +17,7 @@ import { resolveHtmlPath } from './util';
 import fs from 'fs';
 import { OpenedFileDetails } from '../renderer/typings/files';
 // import { runCommand } from './services';
-import { spawn } from "child_process"
+import { spawn, exec } from "child_process"
 
 class AppUpdater {
   constructor() {
@@ -43,33 +43,58 @@ const generateFileDataFromPath = (filePath: string, data: string) => {
   return fileData;
 };
 
-ipcMain.on('execute', async (event: Electron.IpcMainEvent) => {
-  const child = spawn('g++', ['-std=c++14', '-o hello', '~/Desktop/hello.cpp'])
-    
-  child.stdout.on('data', data => {
-    console.log('data:', data);
-    event.reply('onExecuted', data)
-  })
+ipcMain.on('compileAndRun', async (event: Electron.IpcMainEvent) => {
+  // TODO: pass file path instead of hello.cpp
+  exec("g++ ~/Desktop/hello.cpp -o ./builds/a.out", (error, stdout, stderr) => {
+    if (error) {
+      console.log(`error: ${error.message}`);
+      return;
+    }
+
+    if (stderr) {
+      console.log(`stderr: ${stderr}`);
+      event.reply('compilationError', stderr) // TODO: listen it for compilation error
+      return
+    }
   
-  child.stderr.on('error', error => {
-    console.log('error:', error);
-  })
+    const child = spawn("./builds/a.out")
+    child.stdin.write("4 5"); // TODO: pass here whatever taken from user from CT tab
+    child.stdin.end();
+
+    child.stdout.on("data", (data) => {
+      console.log(`child stdout:\n${data}`);
+      event.reply('scriptExecuted', data) // TODO: listen it for successful execution and output of the script
+    });
+  });
 })
 
-ipcMain.on('run', async (event: Electron.IpcMainEvent) => {
-  const child = spawn('~/Desktop/hello')
+// ipcMain.on('execute', async (event: Electron.IpcMainEvent) => {
+//   const child = spawn('g++', ['-std=c++14', '~/Desktop/hello.cpp'])
+    
+//   child.stdout.on('data', data => {
+//     console.log('data:', data);
+//     event.reply('onExecuted', data)
+//   })
+  
+//   child.stderr.on('error', error => {
+//     console.log('error:', error);
+//   })
+// })
 
-  process.stdout.pipe(child.stdin)
+// ipcMain.on('run', async (event: Electron.IpcMainEvent) => {
+//   const child = spawn('~/Desktop/hello', { stdio: ['pipe', 'pipe', 'pipe'] })
 
-  child.stdout.on('data', data => {
-    console.log('data:', data);
-    event.reply('onRan', data)
-  })
+// //  child.stdin.write('4')
 
-  child.stderr.on('error', error => {
-    console.log('error:', error);
-  })
-})
+//   child.stdout.on('data', data => {
+//     console.log('data:', data);
+//     event.reply('onRan', data)
+//   })
+
+//   child.stderr.on('error', error => {
+//     console.log('error:', error);
+//   })
+// })
 
 const handleOpenDialog = async (event: Electron.IpcMainEvent) => {
   // Open a file dialog when "Open" is clicked
