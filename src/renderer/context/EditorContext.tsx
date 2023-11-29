@@ -19,6 +19,9 @@ export const EditorContext = React.createContext<EditorContextType>({
     },
     updateActiveFileId: () => {
       return;
+    },
+    getActiveFileDetails: () => {
+      return undefined
     }
   }, values: {
     fallback: true,
@@ -39,6 +42,10 @@ export function EditorProvider(props: { children: React.ReactNode }) {
   const updateActiveFileId = (id: string) => {
     setActiveFileId(id);
   };
+
+  const getActiveFileDetails = () => {
+    return openedFiles.get(activeFileId)
+  }
 
   const openAFile = (fileDetails: OpenedFileDetails) => {
     const id = uuidv4();
@@ -72,7 +79,8 @@ export function EditorProvider(props: { children: React.ReactNode }) {
         listenForFileOpenings,
         getFileDetailsById,
         handleEditorDidMount,
-        updateActiveFileId
+        updateActiveFileId,
+        getActiveFileDetails
       },
       values: {
         fallback,

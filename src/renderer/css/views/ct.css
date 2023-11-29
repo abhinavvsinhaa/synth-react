@@ -35,9 +35,20 @@
   cursor: pointer;
 }
 
+.ct-input{
+  display: grid;
+  margin-top: 10px;
+  height: 20%;
+}
+
+.ct-input > textarea{
+  display: grid;
+  resize: none;
+}
+
 .ct-output {
   background-color: #080808;
-  height: 80%;
+  height: 50%;
   margin-top: 10px;
   overflow-y: scroll;
 }

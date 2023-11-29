@@ -17,7 +17,7 @@ import { resolveHtmlPath } from './util';
 import fs from 'fs';
 import { OpenedFileDetails } from '../renderer/typings/files';
 // import { runCommand } from './services';
-import { spawn, exec } from "child_process"
+import { spawn, exec } from 'child_process';
 
 class AppUpdater {
   constructor() {
@@ -43,39 +43,44 @@ const generateFileDataFromPath = (filePath: string, data: string) => {
   return fileData;
 };
 
-ipcMain.on('compileAndRun', async (event: Electron.IpcMainEvent) => {
-  // TODO: pass file path instead of hello.cpp
-  exec("g++ ~/Desktop/hello.cpp -o ./builds/a.out", (error, stdout, stderr) => {
+ipcMain.on('compileAndRun', async (event: Electron.IpcMainEvent, props: {
+  filePath: string,
+  inputData: string
+}) => {
+  exec(`g++ ${props.filePath}`, (error, stdout, stderr) => {
     if (error) {
       console.log(`error: ${error.message}`);
+      event.reply('compilationStatus', new TextEncoder().encode(error.message));
       return;
     }
 
     if (stderr) {
       console.log(`stderr: ${stderr}`);
-      event.reply('compilationError', stderr) // TODO: listen it for compilation error
-      return
+      event.reply('compilationStatus', new TextEncoder().encode(stderr)); // TODO: listen it for compilation status
+      return;
+    } else {
+      event.reply('compilationStatus', new TextEncoder().encode('Compilation Success'));
     }
-  
-    const child = spawn("./builds/a.out")
-    child.stdin.write("4 5"); // TODO: pass here whatever taken from user from CT tab
+
+    const child = spawn('./a.out');
+    child.stdin.write(props.inputData); // TODO: pass here whatever taken from user from CT tab
     child.stdin.end();
 
-    child.stdout.on("data", (data) => {
+    child.stdout.on('data', (data) => {
       console.log(`child stdout:\n${data}`);
-      event.reply('scriptExecuted', data) // TODO: listen it for successful execution and output of the script
+      event.reply('scriptExecuted', data); // TODO: listen it for successful execution and output of the script
     });
   });
-})
+});
 
 // ipcMain.on('execute', async (event: Electron.IpcMainEvent) => {
 //   const child = spawn('g++', ['-std=c++14', '~/Desktop/hello.cpp'])
-    
+
 //   child.stdout.on('data', data => {
 //     console.log('data:', data);
 //     event.reply('onExecuted', data)
 //   })
-  
+
 //   child.stderr.on('error', error => {
 //     console.log('error:', error);
 //   })

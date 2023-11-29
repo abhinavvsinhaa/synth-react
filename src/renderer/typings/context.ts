@@ -8,7 +8,8 @@ export type EditorContextType = {
     listenForFileOpenings: () => void,
     handleEditorDidMount: (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => void
     getFileDetailsById: (id: string) => OpenedFileDetails | undefined,
-    updateActiveFileId: (id: string) => void
+    updateActiveFileId: (id: string) => void,
+    getActiveFileDetails: () => OpenedFileDetails | undefined
   },
   values: {
     fallback: boolean,
