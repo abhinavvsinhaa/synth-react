@@ -1,5 +1,12 @@
 import { OpenedFileDetails } from '../typings/files';
 
+export const ExtensionLanguageMap = new Map<string, string>([
+  ['js', 'javascript'],
+  ['ts', 'typescript'],
+  ['cpp', 'cpp'],
+  ['c', 'c']
+]);
+
 
 export const FallbackCTABtns = [
   {

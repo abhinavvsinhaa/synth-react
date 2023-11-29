@@ -1,13 +1,16 @@
 import { Editor } from './editor/Editor';
 import { CT } from './sidebar/ct/CT';
 import { Menu } from './sidebar/menu/Menu';
+import { EditorProvider } from '../context/EditorContext';
 
 export const Window = () => {
   return (
     <div id={'window'}>
-        <Menu/>
+      <Menu />
+      <EditorProvider>
         <Editor />
-        <CT/>
+        <CT />
+      </EditorProvider>
     </div>
   );
-}
+};

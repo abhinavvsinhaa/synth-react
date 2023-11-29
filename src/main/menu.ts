@@ -8,6 +8,7 @@ import {
 import fs from 'fs';
 import { OpenedFileDetails } from '../renderer/typings/files';
 import path from 'path';
+import * as electron from 'electron';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -116,7 +117,6 @@ export default class MenuBuilder {
                     fileName,
                     fileExtension
                   };
-                  this.mainWindow.webContents.send('file-opened-menu', fileData);
                 }
               });
             }
