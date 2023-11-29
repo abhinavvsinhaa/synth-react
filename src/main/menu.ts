@@ -95,7 +95,7 @@ export default class MenuBuilder {
       submenu: [
         {
           label: 'Open File', accelerator: 'Command+O',
-          click: async () => {
+          click: async (menu, window, event) => {
             const result = await dialog.showOpenDialog({
               properties: ['openFile']
             });
@@ -117,6 +117,7 @@ export default class MenuBuilder {
                     fileName,
                     fileExtension
                   };
+                  this.mainWindow.webContents.send('on-file-open', fileData);
                 }
               });
             }
@@ -148,7 +149,7 @@ export default class MenuBuilder {
                   fileName,
                   fileExtension
                 };
-                this.mainWindow.webContents.send('file-opened-menu', fileData);
+                this.mainWindow.webContents.send('on-file-open', fileData);
               } else {
                 //TODO: Error handler
               }
