@@ -9,11 +9,13 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import fs from 'fs';
+import { OpenedFileDetails } from '../renderer/typings/files';
 
 class AppUpdater {
   constructor() {
@@ -25,10 +27,65 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
+const generateFileDataFromPath = (filePath: string, data: string) => {
+  const dotSplitArr = filePath.split('.');
+  const slashSplitArr = filePath.split('/');
+  const fileExtension = dotSplitArr[dotSplitArr.length - 1];
+  const fileName = slashSplitArr[slashSplitArr.length - 1];
+  const fileData: OpenedFileDetails = {
+    path: filePath,
+    data: data,
+    fileName,
+    fileExtension
+  };
+  return fileData;
+};
+
+const handleOpenDialog = async (event: Electron.IpcMainEvent) => {
+  // Open a file dialog when "Open" is clicked
+  const result = await dialog.showOpenDialog({
+    properties: ['openFile']
+  });
+  if (!result.canceled) {
+    // Handle the selected file here
+    const filePath = result.filePaths[0];
+    // Perform operations with the selected file
+    fs.readFile(filePath, 'utf-8', (err, data) => {
+      if (err) {
+
+      } else {
+        const fileData = generateFileDataFromPath(filePath, data);
+        event.reply('on-file-open', fileData);
+      }
+    });
+  }
+};
+ipcMain.on('showOpenDialog', async (event) => {
+  await handleOpenDialog(event);
+});
+
+const handleSaveDialog = async (event: Electron.IpcMainEvent) => {
+  const file = await dialog.showSaveDialog({
+    title: 'Select the File Path to save',
+    defaultPath: path.join(__dirname),
+    // defaultPath: path.join(__dirname, '../assets/'),
+    buttonLabel: 'Save',
+    // Restricting the user to only Text Files.
+    properties: []
+  });
+  if (!file.canceled) {
+    const filePath = file.filePath;
+    if (filePath) {
+      const fileData = generateFileDataFromPath(filePath.toString(), '');
+      event.reply('on-file-open', fileData);
+    } else {
+      //TODO: Error handler
+    }
+  }
+};
+
+ipcMain.on('showSaveDialog', async (event) => {
+  await handleSaveDialog(event);
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -51,7 +108,7 @@ const installExtensions = async () => {
   return installer
     .default(
       extensions.map((name) => installer[name]),
-      forceDownload,
+      forceDownload
     )
     .catch(console.log);
 };
@@ -70,15 +127,14 @@ const createWindow = async () => {
   };
 
   mainWindow = new BrowserWindow({
-    show: false,
-    width: 1024,
-    height: 728,
-    icon: getAssetPath('icon.png'),
+    height: 600,
+    width: 800,
+    fullscreen: true,
     webPreferences: {
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
-        : path.join(__dirname, '../../.erb/dll/preload.js'),
-    },
+        : path.join(__dirname, '../../.erb/dll/preload.js')
+    }
   });
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));

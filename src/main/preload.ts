@@ -2,7 +2,7 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example';
+export type Channels = 'showOpenDialog';
 
 const electronHandler = {
   ipcRenderer: {
@@ -24,6 +24,6 @@ const electronHandler = {
   },
 };
 
-contextBridge.exposeInMainWorld('electron', electronHandler);
+contextBridge.exposeInMainWorld('electronAPI', electronHandler);
 
 export type ElectronHandler = typeof electronHandler;
