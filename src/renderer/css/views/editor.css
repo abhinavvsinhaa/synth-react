@@ -1,5 +1,9 @@
-.editor {
-  width: 60%;
+#synth-editor {
+  width: 65%;
   height: 100%;
-  background-color: bisque;
+  display: grid;
+  position: absolute;
+  top: 0;
+  left: 5%;
+  border-left: 1px solid rgb(35, 35, 35);
 }

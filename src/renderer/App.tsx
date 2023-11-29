@@ -1,7 +1,5 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
 import { Window } from './views/Window';
-import './App.css';
 import { useEffect } from 'react';
 
 export default function App() {

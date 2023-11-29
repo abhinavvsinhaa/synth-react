@@ -1,0 +1,23 @@
+@import "./views/index.css";
+
+body {
+    margin: 0;
+}
+
+#root {
+    display: grid;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background-color: rgb(12, 12, 12)
+}
+
+
+#window {
+    display: grid;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
