@@ -16,6 +16,8 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import fs from 'fs';
 import { OpenedFileDetails } from '../renderer/typings/files';
+// import { runCommand } from './services';
+import { spawn } from "child_process"
 
 class AppUpdater {
   constructor() {
@@ -40,6 +42,19 @@ const generateFileDataFromPath = (filePath: string, data: string) => {
   };
   return fileData;
 };
+
+ipcMain.on('execute', async (event: Electron.IpcMainEvent) => {
+  const child = spawn('pwd')
+    
+  child.stdout.on('data', data => {
+      console.log('data:', data);
+      event.reply('onExecuted', data)
+  })
+  
+  child.stderr.on('error', error => {
+      console.log('error:', error);
+  })
+})
 
 const handleOpenDialog = async (event: Electron.IpcMainEvent) => {
   // Open a file dialog when "Open" is clicked

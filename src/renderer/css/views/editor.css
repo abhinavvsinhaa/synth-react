@@ -15,7 +15,7 @@
     height: 100%;
     top: 0;
     bottom: 0;
-    background-color: rgb(3, 3, 3);
+    background-color: #080808;
 }
 
 #synth-editor-fallback-greeting-div {
@@ -24,15 +24,15 @@
     justify-self: center;
     position: absolute;
     color: white;
-    letter-spacing: 4px;
+    /* letter-spacing: 4px; */
     font-size: 42px;
     font-weight: bolder;
 }
 
 #synth-editor-fallback-actionbtn-container {
     display: grid;
-    gap: 10px;
-    grid-template-columns: 1fr 1fr;
+    /* gap: 10px; */
+    /* grid-template-columns: 1fr 1fr; */
     position: absolute;
     place-self: center;
     width: 50%;
@@ -42,17 +42,27 @@
 #synth-editor-fallback-actionbtn {
     display: grid;
     place-self: center;
-    background-color: #2e2eb0;
-    border-radius: 6px;
+    background-color: #9E9DFF;
+    /* border-radius: 6px; */
     color: white;
     width: fit-content;
     height: fit-content;
     padding: 10px 20px;
     cursor: pointer;
+    width: 120px;
+    text-align: center;
 }
 
-#synth-editor-fallback-actionbtn:hover {
+/* #synth-editor-fallback-actionbtn:hover {
     background-color: #1e1e75;
+} */
+
+#tagline {
+    color: white;
+    opacity: 0.8;
+    font-size: 20px;
+    font-weight: lighter;
+    text-align: center;
 }
 
 
@@ -141,21 +151,4 @@
     height: 34px;
     width: 150px;
     background-color: #1e1e1e;
-}
-
-.ct {
-
-}
-
-.tab-name {
-  color: #F9FBFD;
-  font-weight: bold;
-}
-
-.tab-description {
-  color: #F9FBFD;
-  font-size: 12px;
-  font-weight: lighter;
-  opacity: 0.8;
-  margin-top: 8px;
 }

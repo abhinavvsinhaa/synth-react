@@ -15,7 +15,8 @@ export const Editor = () => {
     return (
       <div id={'synth-editor-fallback-container'}>
         <div id={'synth-editor-fallback-greeting-div'}>
-          Welcome to SynthCode!
+          Welcome to SynthCode
+          <p id='tagline'>Code your way to perfection</p>
         </div>
         <div id={'synth-editor-fallback-actionbtn-container'}>
           {
