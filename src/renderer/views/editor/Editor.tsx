@@ -4,12 +4,15 @@ import { useEffect, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Editor as MonacoEditor, Monaco } from '@monaco-editor/react';
 import { editor } from 'monaco-editor';
+import FileTabs from './FileTabs';
 
 export const Editor = () => {
   const [fallback, setFallback] = useState(true);
   const [openedFiles, setOpenedFiles] = useState(new Map<string, OpenedFileDetails>());
   const [activeFileId, setActiveFileId] = useState<string>('');
   const monacoEditorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+  const parentRef = useRef(null);
+  const [filesArr, setFilesArr] = useState<OpenedFileDetails[]>([]);
 
   const RenderFallback = () => {
     return (
@@ -34,6 +37,7 @@ export const Editor = () => {
     const id = uuidv4();
     openedFiles.set(id, fileDetails);
     setOpenedFiles(openedFiles);
+    setFilesArr([...filesArr, fileDetails]);
     setActiveFileId(id);
     if (fallback) setFallback(false);
   };
@@ -73,7 +77,8 @@ export const Editor = () => {
   }, []);
 
   return (
-    <div id={'synth-editor'}>
+    <div id={'synth-editor'} ref={parentRef}>
+      <FileTabs filesArr={filesArr} activeFileId={activeFileId} />
       {
         fallback ? <RenderFallback /> : <RenderEditor />
       }
