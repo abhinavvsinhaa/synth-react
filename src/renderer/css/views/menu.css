@@ -1,5 +1,8 @@
-.menu {
-  width: 10%;
+#synth-menu {
+  display: grid;
+  position: absolute;
+  top: 0;
+  left: 0;
   height: 100%;
-  background-color: red;
+  width: 5%;
 }

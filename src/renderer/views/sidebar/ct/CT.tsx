@@ -1,5 +1,3 @@
-import '../../../css/views/ct.css'
-
 const Compile = () => {
   return (
     <div>
