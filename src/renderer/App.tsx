@@ -3,12 +3,6 @@ import { Window } from './views/Window';
 import { useEffect } from 'react';
 
 export default function App() {
-  useEffect(() => {
-    // //@ts-ignore
-    // window.electronAPI.ipcRenderer.on('on-file-open', (fileDetails: OpenedFileDetails) => {
-    //   console.log(fileDetails);
-    // });
-  }, []);
   return (
     <Router>
       <Routes>
