@@ -13,7 +13,7 @@ const Compile = () => {
 
 export const CT = () => {
   return (
-    <div className={'ct'}>
+    <div id={'synth-ct'}>
       <Compile/>
     </div>
   );
