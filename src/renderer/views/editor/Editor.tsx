@@ -50,7 +50,7 @@ export const Editor = () => {
 
   return (
     <div id={'synth-editor'} ref={parentRef}>
-      <FileTabs filesArr={values.filesArr} activeFileId={values.activeFileId} />
+      <FileTabs />
       {
         values.fallback ? <RenderFallback /> : <RenderEditor />
       }

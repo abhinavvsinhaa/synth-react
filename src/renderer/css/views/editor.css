@@ -11,17 +11,26 @@
 
 #synth-editor-file-tabs {
     display: grid;
-    width: 100%;
+    width: fit-content;
     grid-auto-flow: column;
     gap: 5px;
+    cursor: pointer;
     border-bottom: 1px solid rgb(35, 35, 35);
+}
+
+.synth-editor-file-tab-active{
+    border-bottom: 3px solid rgb(98, 104, 255);
+}
+
+#synth-editor-file-tab:hover {
+    background-color: #1f1f1f;
 }
 
 #synth-editor-file-tab {
     display: grid;
     width: fit-content;
     max-width: 100px;
-    padding: 10px 8px;
+    padding: 10px 20px;
     color: #F9FBFD;
     border-right: 1px solid rgb(35, 35, 35);
 }
@@ -169,4 +178,21 @@
     height: 34px;
     width: 150px;
     background-color: #1e1e1e;
+}
+
+.ct {
+
+}
+
+.tab-name {
+    color: #F9FBFD;
+    font-weight: bold;
+}
+
+.tab-description {
+    color: #F9FBFD;
+    font-size: 12px;
+    font-weight: lighter;
+    opacity: 0.8;
+    margin-top: 8px;
 }

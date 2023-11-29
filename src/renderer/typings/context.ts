@@ -1,19 +1,19 @@
 import { Monaco } from '@monaco-editor/react';
 import { editor } from 'monaco-editor';
 import { OpenedFileDetails } from './files';
-import React from 'react';
+import React, { MutableRefObject } from 'react';
 
 export type EditorContextType = {
   handle: {
     listenForFileOpenings: () => void,
     handleEditorDidMount: (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => void
-    getFileDetailsById: (id: string) => OpenedFileDetails | undefined
+    getFileDetailsById: (id: string) => OpenedFileDetails | undefined,
+    updateActiveFileId: (id: string) => void
   },
   values: {
     fallback: boolean,
     openedFiles: Map<string, OpenedFileDetails>,
     activeFileId: string,
     monacoEditorRef: React.MutableRefObject<editor.IStandaloneCodeEditor | null> | null,
-    filesArr: OpenedFileDetails[]
   }
 }
